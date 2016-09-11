@@ -1,0 +1,17 @@
+{
+  "name": "csv-to-table",
+  "version": "1.0.0",
+  "description": "convert csv or json to html table string",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha .\\index.test.js"
+  },
+  "author": "chreestopher",
+  "license": "ISC",
+  "dependencies": {
+    "csv-to-json": "^0.1.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
