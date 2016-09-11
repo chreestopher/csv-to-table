@@ -6,44 +6,6 @@ var tablemaker = require('./index.js');
 var expect = chai.expect;
 
 //noinspection JSUnresolvedFunction
-describe('CSV To Table', function() {
-    //noinspection JSUnresolvedFunction
-    it('parse a CSV file and return an html table', function(done){
-            tablemaker.csvToTable("./testcsvfile.csv").then(function(data){
-            expect(data).to.include("<table>");
-            expect(data).to.include("<th>");
-            expect(data).to.include("<tr>");
-            expect(data).to.include("<td>");
-            expect(data).to.include("</table>");
-            expect(data).to.include("</th>");
-            expect(data).to.include("</tr>");
-            expect(data).to.include("</td>");
-            done();
-        }).catch(function(error){
-            done(error);
-        })
-    });
-    //noinspection JSUnresolvedFunction
-    it('uses the Id CSVtoTable for the id of the div containing the table by default', function(done){
-        tablemaker.csvToTable("./testcsvfile.csv").then(function(data){
-            expect(data).to.include('<div id="CSVtoTable">');
-            done();
-        }).catch(function(error){
-            done(error);
-        })
-    });
-    //noinspection JSUnresolvedFunction
-    it('uses the passed in Id for the id of the div containing the table, if provided', function(done){
-        var myId = "myID";
-        tablemaker.csvToTable("./testcsvfile.csv", myId).then(function(data){
-            expect(data).to.include(`<div id="${myId}">`);
-            done();
-        }).catch(function(error){
-            done(error);
-        })
-    });
-});
-//noinspection JSUnresolvedFunction
 describe('Objects To Table', function() {
     var jsonObjects = [
         {
@@ -109,5 +71,51 @@ describe('Objects To Table', function() {
         var data = tablemaker.objectsToTable(jsonObjects, myId);
         expect(data).to.include(`<div id="${myId}">`);
         done();
+    });
+});
+
+//noinspection JSUnresolvedFunction
+describe('CSV To Table', function() {
+    //noinspection JSUnresolvedFunction
+    it('Throws Error if file not found', function(done){
+        tablemaker.csvToTable("./testcsvfile.csvnothere").catch(function(error){
+            expect(error.code).to.include('ENOENT');
+            done();
+        })
+    });
+    //noinspection JSUnresolvedFunction
+    it('parse a CSV file and return an html table', function(done){
+            tablemaker.csvToTable("./testcsvfile.csv").then(function(data){
+            expect(data).to.include("<table>");
+            expect(data).to.include("<th>");
+            expect(data).to.include("<tr>");
+            expect(data).to.include("<td>");
+            expect(data).to.include("</table>");
+            expect(data).to.include("</th>");
+            expect(data).to.include("</tr>");
+            expect(data).to.include("</td>");
+            done();
+        }).catch(function(error){
+            done(error);
+        })
+    });
+    //noinspection JSUnresolvedFunction
+    it('uses the Id CSVtoTable for the id of the div containing the table by default', function(done){
+        tablemaker.csvToTable("./testcsvfile.csv").then(function(data){
+            expect(data).to.include('<div id="CSVtoTable">');
+            done();
+        }).catch(function(error){
+            done(error);
+        })
+    });
+    //noinspection JSUnresolvedFunction
+    it('uses the passed in Id for the id of the div containing the table, if provided', function(done){
+        var myId = "myID";
+        tablemaker.csvToTable("./testcsvfile.csv", myId).then(function(data){
+            expect(data).to.include(`<div id="${myId}">`);
+            done();
+        }).catch(function(error){
+            done(error);
+        })
     });
 });
